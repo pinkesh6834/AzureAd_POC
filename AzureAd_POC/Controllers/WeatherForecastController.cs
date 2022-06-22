@@ -5,7 +5,8 @@ using Microsoft.Identity.Web.Resource;
 namespace AzureAd_POC.Controllers
 {
     [ApiController]
-    [Authorize("ADGroupValidation")]
+    //[Authorize("ADGroupValidation")]
+    [Authorize("workorderapi")]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace AzureAd_POC.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        [Authorize("ADGroupValidation")]
+
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

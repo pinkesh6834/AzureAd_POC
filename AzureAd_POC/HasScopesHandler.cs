@@ -18,16 +18,18 @@ namespace AzureAd_POC
 
             await Task.CompletedTask;
 
+
             // If user does not have the scope claim, get out of here
-            if (!context.User.HasClaim(c => c.Type == "scp"))
+            if (!context.User.HasClaim(c => c.Type == "http://schemas.microsoft.com/identity/claims/scope"))
                 return;
 
-            var scopes = context.User.FindAll(c => c.Type == "scp");
-            if (scopes.Any(s => s.Value == requirement.Scope))
+
+            var scopes = context.User.FindAll(c => c.Type == "http://schemas.microsoft.com/identity/claims/scope").Select(x => x.Value).FirstOrDefault()?.Split(" ");
+
+            if (scopes != null && scopes.Any(s => s == requirement.Scope))
             {
                 context.Succeed(requirement);
             }
-
         }
     }
 }
